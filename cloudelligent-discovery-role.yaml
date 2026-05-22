@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Creates an IAM Role with ReadOnlyAccess for infrastructure discovery.
+
+Resources:
+  CloudelligentDiscoveryRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: CloudelligentDiscoveryRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: 'arn:aws:iam::282762468439:root'
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: '9ba55e7ffef3c1611a511bbbdadbcdbff662b8d9'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/ReadOnlyAccess
+
+Outputs:
+  RoleArn:
+    Description: ARN of the created role
+    Value: !GetAtt CloudelligentDiscoveryRole.Arn
